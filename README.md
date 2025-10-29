@@ -48,14 +48,20 @@
 - Appel de l'API avec la méthode `GET` afin de récupérer un seul livre a partir de l'`id`.
 - Appel de l'API avec la méthode `DELETE` afin de supprimer le livre spécifié.
    Appel de l'API avec la méthode `POST` afin de créer  un nouveau livre a partir des informations données **(name, author, editor, year)**.
-
+-  Appel de l'API avec la méthode `PUT` afin de mettre a jour le livre spécifié et retourne le status.
 ### **[id].tsx**
 - Récupération de l'`id` a partir de l'url (avec `useLocalSearchParams()`) pour l'ajouter dans la function `getDetailBook()` pour ensuite récupérer seulement le livre correspondant a ce dernier.
 - Affichage des informations dans le return récupéré depuis `getDetailBook()`
 - Ajout d'un bouton pour supprimer le livre et création d'une fonction `handleDeleteBook` qui récupère l'`id` pour supprimer le livre. 
 - Redirection vers la page d'acceuil après succès.
+- Ajout d'un bouton de redirection vers la page de modification.
 
 ### **new-book.tsx**
 - Création de plusieurs champs pour rentrer les informations minimum a la création d'un livre **(name, author, editor, year)**.
-- au clique du bouton de création, on envoies les informations des variables cités ci-dessus a la fonction `postNewBook()` puis si lors du return, on recoit un status `201` on renvoie l'utilisateur sur la page d'acceuil.
+- Au clique du bouton de création, on envoies les informations des variables cités ci-dessus a la fonction `postNewBook()` puis si lors du return, on recoit un status `201` on renvoie l'utilisateur sur la page d'acceuil.
+### **update-book/[id].tsx**
+- récupération des informations du livre que l'on veut modifier a partir de l'id (a l'aide de `useLocalSearchParams()`).
+- Création des variables qui vont contenir les valeurs récupérés depuis `getDetailBook()` mais aussi ceux modifié a partir du `TextInput`.
+- Création d'une fonction nommée `handleUpdateBook()` asynchrone qui appele la fonction `updateBooks()`  permettent pour mettre a jour les informations du "formulaire".
+- Redirection vers la page d'acceuil après que la mise a jour sois valide.
 ---
