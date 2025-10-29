@@ -24,8 +24,9 @@ const router = useRouter();
     <View>
       {book && (
         <View>
-          <Button title="supprimer" onPress={() => handleDeleteBook(book.id)} />
           <View style={styles.Container}>
+          <Button title="modifier" onPress={() => router.push(`/books/update-book/${book.id.toString()}`)} />
+          <Button title="supprimer" onPress={() => handleDeleteBook(book.id)} />
           <Text style={styles.Text}>auteur: {book.author}</Text>
           <Text style={styles.Text}>editeur: {book.editor}</Text>
           <Text style={styles.Text}>nom: {book.name}</Text>
