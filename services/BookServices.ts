@@ -59,6 +59,30 @@ async function getDetailBook(id: number): Promise<Books>{
   return data;
 }
 
+async function postNewBook(name: string, author: string, editor: string, year: number){
+
+  try {
+    // création  d'un book a partir des informations fournies
+    // const response = await fetch(`https://api.books.tristan-renard.com/books/${id}`);
+    const response = await fetch(`http://localhost:3000/books/`, {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({name, author, editor, year})
+    });
+  
+    if(response.status === 201){
+      return response.status;
+    }else {
+      console.error('Erreur lors de la création du livre');
+      return response.status;
+    }
+
+  } catch (error) {
+    console.error(error);
+  }
+
+}
+
 
 async function getDeleteBook(id: number){
 
@@ -67,12 +91,9 @@ async function getDeleteBook(id: number){
     const response = await fetch(`http://localhost:3000/books/${id}`, {
       method: "DELETE"
     });
-  
-    const data = await response.json();
-  
+    
     if(response.status === 200){
-      console.log(data)
-      return data;
+      return response.status;
     }
     
   } catch (error) {
@@ -81,5 +102,5 @@ async function getDeleteBook(id: number){
   
   
 }
-export { getBooks, getDeleteBook, getDetailBook };
+export { getBooks, getDeleteBook, getDetailBook, postNewBook };
 
