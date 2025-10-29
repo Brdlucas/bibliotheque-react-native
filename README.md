@@ -1,50 +1,67 @@
-# Welcome to your Expo app 👋
+# 📚 Lucas Bourdon – React Native
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+---
 
-## Get started
+## 🚀 Lancer le projet avec Expo
 
-1. Install dependencies
+1. **Installer les dépendances**
 
-   ```bash
+   ```
    npm install
    ```
 
-2. Start the app
+2. **Démarrer le projet**
 
-   ```bash
+   ```
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🧩 Structure du projet
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### 📂 models
+- **Books.ts**
+  - Définit le type `Books`, décrivant la structure des objets livre.
 
-## Get a fresh project
+### ⚙️ services
+- **BookService.ts**
+  - Contient les fonctions nécessaires aux appels API (`GET`, `POST`, `PUT`).
+  - Exporte plusieurs fonctions suivant le besoin.
 
-When you're ready, run:
+### 🧱 components
+- **BookCard.tsx**
+  - Composant réutilisable appelé dans `index.tsx`.
+  - Sert à afficher le rendu d’un livre dans la boucle `books.map()`.
 
-```bash
-npm run reset-project
-```
+---
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🔄 Changements récents
 
-## Learn more
+### **index.tsx**
+- Appel de la fonction `getBooks()` pour récupérer la liste des livres depuis l’API.
+- Affichage des livres via un `.map()` qui appelle le composant `BookCard` pour chaque entrée.
 
-To learn more about developing your project with Expo, look at the following resources:
+### **BookService.tsx**
+- Appel de l’API avec la méthode `GET` afin d’obtenir tous les livres disponibles.
+- Création d’une constante `books` qui effectue un `.map()` sur `data` pour filtrer et formater les valeurs nécessaires.
+- Appel de l'API avec la méthode `GET` afin de récupérer un seul livre a partir de l'`id`.
+- Appel de l'API avec la méthode `DELETE` afin de supprimer le livre spécifié.
+   Appel de l'API avec la méthode `POST` afin de créer  un nouveau livre a partir des informations données **(name, author, editor, year)**.
+-  Appel de l'API avec la méthode `PUT` afin de mettre a jour le livre spécifié et retourne le status.
+### **[id].tsx**
+- Récupération de l'`id` a partir de l'url (avec `useLocalSearchParams()`) pour l'ajouter dans la function `getDetailBook()` pour ensuite récupérer seulement le livre correspondant a ce dernier.
+- Affichage des informations dans le return récupéré depuis `getDetailBook()`
+- Ajout d'un bouton pour supprimer le livre et création d'une fonction `handleDeleteBook` qui récupère l'`id` pour supprimer le livre. 
+- Redirection vers la page d'acceuil après succès.
+- Ajout d'un bouton de redirection vers la page de modification.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### **new-book.tsx**
+- Création de plusieurs champs pour rentrer les informations minimum a la création d'un livre **(name, author, editor, year)**.
+- Au clique du bouton de création, on envoies les informations des variables cités ci-dessus a la fonction `postNewBook()` puis si lors du return, on recoit un status `201` on renvoie l'utilisateur sur la page d'acceuil.
+### **update-book/[id].tsx**
+- récupération des informations du livre que l'on veut modifier a partir de l'id (a l'aide de `useLocalSearchParams()`).
+- Création des variables qui vont contenir les valeurs récupérés depuis `getDetailBook()` mais aussi ceux modifié a partir du `TextInput`.
+- Création d'une fonction nommée `handleUpdateBook()` asynchrone qui appele la fonction `updateBooks()`  permettent pour mettre a jour les informations du "formulaire".
+- Redirection vers la page d'acceuil après que la mise a jour sois valide.
+---
