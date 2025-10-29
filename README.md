@@ -45,5 +45,12 @@
 ### **BookService.tsx**
 - Appel de l’API avec la méthode `GET` afin d’obtenir tous les livres disponibles.
 - Création d’une constante `books` qui effectue un `.map()` sur `data` pour filtrer et formater les valeurs nécessaires.
+- Appel de l'API avec la méthode `GET` afin de récupérer un seul livre a partir de l'`id`.
+- Appel de l'API avec la méthode `DELETE` afin de supprimer le livre spécifié.
 
+### **[id].tsx**
+- Récupération de l'`id` a partir de l'url (avec `useLocalSearchParams()`) pour l'ajouter dans la function `getDetailBook()` pour ensuite récupérer seulement le livre correspondant a ce dernier.
+- Affichage des informations dans le return récupéré depuis `getDetailBook()`
+- Ajout d'un bouton pour supprimer le livre et création d'une fonction `handleDeleteBook` qui récupère l'`id` pour supprimer le livre. 
+- Redirection vers la page d'acceuil après succès.
 ---
