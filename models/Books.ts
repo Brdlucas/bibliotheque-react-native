@@ -1,12 +1,12 @@
 export type Books = {
     id: number,
-    name: String,
-    author: String,
-    editor: String,
-    year: Number,
+    name: string,
+    author: string,
+    editor: string,
+    year: number,
     read: boolean,
     favorite: boolean,
     rating: number,
-    cover: String,
-    theme: String
+    cover: string,
+    theme: string
   };
