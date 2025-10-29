@@ -3,7 +3,7 @@ import { Books } from "@/models/Books";
 import { getBooks } from "@/services/BookServices";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Button, Pressable, ScrollView, StyleSheet, View } from "react-native";
 
 export default function Index() {
   const [books, setBooks] = useState<Books[]>([]);
@@ -15,6 +15,7 @@ export default function Index() {
 
   return (
       <ScrollView>
+        <Button  title="ajouter" onPress={() => router.push('/books/new-book')}/>
         <View style={styles.container}>
       { books.map((value, idx) => (
         <Pressable  key={value.id}  onPress={() => router.push(`/books/${value.id.toString()}`)}>
