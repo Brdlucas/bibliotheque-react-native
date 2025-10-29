@@ -47,10 +47,15 @@
 - Création d’une constante `books` qui effectue un `.map()` sur `data` pour filtrer et formater les valeurs nécessaires.
 - Appel de l'API avec la méthode `GET` afin de récupérer un seul livre a partir de l'`id`.
 - Appel de l'API avec la méthode `DELETE` afin de supprimer le livre spécifié.
+   Appel de l'API avec la méthode `POST` afin de créer  un nouveau livre a partir des informations données **(name, author, editor, year)**.
 
 ### **[id].tsx**
 - Récupération de l'`id` a partir de l'url (avec `useLocalSearchParams()`) pour l'ajouter dans la function `getDetailBook()` pour ensuite récupérer seulement le livre correspondant a ce dernier.
 - Affichage des informations dans le return récupéré depuis `getDetailBook()`
 - Ajout d'un bouton pour supprimer le livre et création d'une fonction `handleDeleteBook` qui récupère l'`id` pour supprimer le livre. 
 - Redirection vers la page d'acceuil après succès.
+
+### **new-book.tsx**
+- Création de plusieurs champs pour rentrer les informations minimum a la création d'un livre **(name, author, editor, year)**.
+- au clique du bouton de création, on envoies les informations des variables cités ci-dessus a la fonction `postNewBook()` puis si lors du return, on recoit un status `201` on renvoie l'utilisateur sur la page d'acceuil.
 ---
