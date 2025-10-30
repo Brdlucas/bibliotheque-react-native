@@ -83,7 +83,7 @@ async function postNewBook(name: string, author: string, editor: string, year: n
 
 }
 
-async function updateBooks(id: number, name: string, author: string, editor: string, year: number){
+async function updateBooks(id: number, bookData: Partial<Books>){
 
   try {
     // création  d'un book a partir des informations fournies
@@ -91,8 +91,9 @@ async function updateBooks(id: number, name: string, author: string, editor: str
     const response = await fetch(`http://localhost:3000/books/${id}`, {
       method: "PUT",
       headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify({name, author, editor, year})
+      body: JSON.stringify(bookData)
     });
+
 
     console.log(response.status);
 
