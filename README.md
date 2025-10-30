@@ -22,12 +22,17 @@
 
 ### 📂 models
 - **Books.ts**
-  - Définit le type `Books`, décrivant la structure des objets livre.
+  - Définit le type `Books`, décrivant la structure des objets livres.
+- **Notes.ts**
+  - Définit le type `Notes`, décrivant la structure des objets notes.
 
 ### ⚙️ services
-- **BookService.ts**
-  - Contient les fonctions nécessaires aux appels API (`GET`, `POST`, `PUT`).
-  - Exporte plusieurs fonctions suivant le besoin.
+- **BookServices.ts**
+  - Contient les fonctions nécessaires aux appels API (`GET`, `POST`, `PUT`, `DELETE`).
+  - Exporte plusieurs fonctions suivant les besoins.
+- **NoteServices.ts**
+  - Contient les fonctions nécessaires aux appels API (`GET`, `POST`).
+  - Exporte plusieurs fonctions suivant les besoins.
 
 ### 🧱 components
 - **BookCard.tsx**
@@ -42,7 +47,7 @@
 - Appel de la fonction `getBooks()` pour récupérer la liste des livres depuis l’API.
 - Affichage des livres via un `.map()` qui appelle le composant `BookCard` pour chaque entrée.
 
-### **BookService.tsx**
+### **BookServices.tsx**
 - Appel de l’API avec la méthode `GET` afin d’obtenir tous les livres disponibles.
 - Création d’une constante `books` qui effectue un `.map()` sur `data` pour filtrer et formater les valeurs nécessaires.
 - Appel de l'API avec la méthode `GET` afin de récupérer un seul livre a partir de l'`id`.
@@ -55,6 +60,9 @@
 - Ajout d'un bouton pour supprimer le livre et création d'une fonction `handleDeleteBook` qui récupère l'`id` pour supprimer le livre. 
 - Redirection vers la page d'acceuil après succès.
 - Ajout d'un bouton de redirection vers la page de modification.
+- Appel de la fonction `getNotesByBook()` pour récupérer les notes en relation avec le livre.
+- Création d'un bouton qui permet d'afficher ou non le 'formulaire' pour ajouter une nouvelle note.
+- Création d'une fonction `handleNewNote()` qui récupère l'id pour l'envoyer dans `addNote()` (avec le contenu) afin de créer une nouvelle note en rapport avec le livre, puis mise a jour du tableau `notes` pour un affichage dynamique.
 
 ### **new-book.tsx**
 - Création de plusieurs champs pour rentrer les informations minimum a la création d'un livre **(name, author, editor, year)**.
@@ -64,4 +72,8 @@
 - Création des variables qui vont contenir les valeurs récupérés depuis `getDetailBook()` mais aussi ceux modifié a partir du `TextInput`.
 - Création d'une fonction nommée `handleUpdateBook()` asynchrone qui appele la fonction `updateBooks()`  permettent pour mettre a jour les informations du "formulaire".
 - Redirection vers la page d'acceuil après que la mise a jour sois valide.
+
+### **NoteServices.tsx**
+- Appel de l’API avec la méthode `GET` afin d’obtenir toutes les notes en rapport avec livre.
+- Appel de l’API avec la méthode `POST` afin de créer une nouvelle note affilié au livre.
 ---
