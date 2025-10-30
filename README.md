@@ -38,6 +38,9 @@
 - **BookCard.tsx**
   - Composant réutilisable appelé dans `index.tsx`.
   - Sert à afficher le rendu d’un livre dans la boucle `books.map()`.
+  - Création de `handleUpdateFavorite()` lors du clique pour ajouter au favoris qui créer une constante `updateBook` qui récupère les éléments de book et change le status de favoris.
+  - Insertion ensuite dans la function `onUpdate()` et appel de la fonction `updateBooks()` avec les éléments minimum requis pour mettre a jour le livre.
+  - Condition qui renvoie la valeur d'avant si l'update n'a pas fonctionnée.
 
 ---
 
@@ -46,7 +49,8 @@
 ### **index.tsx**
 - Appel de la fonction `getBooks()` pour récupérer la liste des livres depuis l’API.
 - Affichage des livres via un `.map()` qui appelle le composant `BookCard` pour chaque entrée.
-
+- Création de la fonction `handleBookUpdate()` pour mettre a jour le status de favoris en tant réel.
+- Ajout d'un filtre de recherche pour filtrer seulement les livres ajoutés en favoris
 ### **BookServices.tsx**
 - Appel de l’API avec la méthode `GET` afin d’obtenir tous les livres disponibles.
 - Création d’une constante `books` qui effectue un `.map()` sur `data` pour filtrer et formater les valeurs nécessaires.
@@ -54,6 +58,9 @@
 - Appel de l'API avec la méthode `DELETE` afin de supprimer le livre spécifié.
    Appel de l'API avec la méthode `POST` afin de créer  un nouveau livre a partir des informations données **(name, author, editor, year)**.
 -  Appel de l'API avec la méthode `PUT` afin de mettre a jour le livre spécifié et retourne le status.
+-  Amélioration des rentrées d'information lors de l'update d'un livre (prise en compte de favorite).
+-  Création de `fetchbooks()` qui vérifie si **search** contient une valeur et renvoie une **response** suivant le résultat. 
+-  Fonction utilisée pour filtrer les futures recherches
 ### **[id].tsx**
 - Récupération de l'`id` a partir de l'url (avec `useLocalSearchParams()`) pour l'ajouter dans la function `getDetailBook()` pour ensuite récupérer seulement le livre correspondant a ce dernier.
 - Affichage des informations dans le return récupéré depuis `getDetailBook()`
@@ -63,6 +70,7 @@
 - Appel de la fonction `getNotesByBook()` pour récupérer les notes en relation avec le livre.
 - Création d'un bouton qui permet d'afficher ou non le 'formulaire' pour ajouter une nouvelle note.
 - Création d'une fonction `handleNewNote()` qui récupère l'id pour l'envoyer dans `addNote()` (avec le contenu) afin de créer une nouvelle note en rapport avec le livre, puis mise a jour du tableau `notes` pour un affichage dynamique.
+- Remise en forme suite au changement de `updateBooks()`.
 
 ### **new-book.tsx**
 - Création de plusieurs champs pour rentrer les informations minimum a la création d'un livre **(name, author, editor, year)**.
