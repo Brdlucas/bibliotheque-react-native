@@ -1,11 +1,20 @@
 import { Books } from "@/models/Books";
 
-async function getBooks(): Promise<Books[]> {
+async function getBooks(search: string, value: string): Promise<Books[]> {
 
-  // récupération des books a partir de l'api
-  // const response = await fetch("https://api.books.tristan-renard.com/books");
-  const response = await fetch("http://localhost:3000/books");
-  const data = await response.json();
+  // récupération des books a partir de l'api et suivant le filtre de recherche
+  const fetchbooks = async () => {
+      let response;
+      if(!search){
+        response = await fetch("http://localhost:3000/books");
+      }else{
+        response = await fetch(`http://localhost:3000/books?${search}=${value}`);
+      }
+    const data = response.json();
+    return data;
+  }
+
+  const data = await fetchbooks();
 
 //   mise en forme de la variable books en récupérent les éléments pertinents
   const books = data.map(
