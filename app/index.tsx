@@ -13,13 +13,22 @@ export default function Index() {
     getBooks().then(data => setBooks(data));
   }, []);
 
+
+    const handleBookUpdate = (updatedBook: Books) => {
+    setBooks(prevBooks => 
+      prevBooks.map(book => 
+        book.id === updatedBook.id ? updatedBook : book
+      )
+    );
+  };
+
   return (
       <ScrollView>
         <Button  title="ajouter" onPress={() => router.push('/books/new-book')}/>
         <View style={styles.container}>
       { books.map((value, idx) => (
         <Pressable  key={value.id}  onPress={() => router.push(`/books/${value.id.toString()}`)}>
-          <BookCard {...value} />
+          <BookCard {...value} onUpdate={handleBookUpdate} />
         </Pressable>
           ))
       }
