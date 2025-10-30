@@ -1,17 +1,23 @@
 import { Books } from "@/models/Books";
+import { Notes } from "@/models/Notes";
 import { getDeleteBook, getDetailBook } from "@/services/BookServices";
+import { addNote, getNotesByBook } from "@/services/NoteServices";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function BookDetails() {
   const [book, setBook] = useState<Books>();
+  const [notes, setNotes] = useState<Notes[]>([]);
+  const [contentNote, onChangeContentNote] = useState("");
+  const [isActive, setIsActvie] = useState(false);
   const { id } = useLocalSearchParams();
 const router = useRouter();
 
   useEffect(() => {
     // récupération du livre en envoyent l'id dans getDetailBook
     getDetailBook(Number(id)).then((data) => setBook(data));
+    getNotesByBook(Number(id)).then(data => setNotes(data));
   }, [id]);
 
 
@@ -20,8 +26,17 @@ const router = useRouter();
     getDeleteBook(id).then(() => router.navigate('/'));
   };
 
+
+  const handleNewNote = async (id: number) => {
+    addNote(Number(id), contentNote).then((data) => {
+      setNotes([...notes, data])
+      onChangeContentNote("");
+      setIsActvie(!isActive);
+      });
+  }
+
   return (
-    <View>
+    <ScrollView>
       {book && (
         <View>
           <View style={styles.Container}>
@@ -33,10 +48,27 @@ const router = useRouter();
           <Text style={styles.Text}>année: {Number(book.year)}</Text>
           <Text style={styles.Text}>note: {Number(book.rating)}/5</Text>
           <Text style={styles.Text}>theme: {book.theme}</Text>
+          <Button title="nouvelle note" onPress={() => setIsActvie(!isActive) } />
+          {
+            isActive && (
+          <View style={styles.ContainerCard}>
+          <TextInput style={styles.TextCard} value={contentNote} onChangeText={onChangeContentNote}/>
+          <Button title="créer la note" onPress={() => handleNewNote(book.id)} />
+          </View>
+            )
+          }
+          {
+            notes && notes.map(value => (
+              <View key={value.id}>
+                <Text>{value.content}</Text>
+                <Text>le {new Date(value.dateISO).getDate()}/{new Date(value.dateISO).getMonth()}/{new Date(value.dateISO).getFullYear()}</Text>
+              </View>
+            ))
+          }
           </View>
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 }
 
@@ -47,6 +79,22 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     gap: 16,
     padding: 12
+  },
+
+  ContainerCard: {
+  backgroundColor: 'gray',
+  height: 100,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  gap: 16,
+  padding: 12,
+  },
+
+  TextCard: {
+  backgroundColor: 'lightgray',
+  padding: 6
+
   },
 
   Text: {
