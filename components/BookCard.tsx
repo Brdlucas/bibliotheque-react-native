@@ -1,14 +1,48 @@
-import { Books } from '@/models/Books'
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Books } from '@/models/Books';
+import { updateBooks } from '@/services/BookServices';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
-function BookCard(book: Books) {
+interface BookCardProps extends Books {
+  onUpdate: (updatedBook: Books) => void;
+} 
+
+function BookCard(props: BookCardProps) {
+ const {onUpdate, ...book} = props
+
+
+  const handleUpdateFavorite = async () => {
+    const updateBook = {
+      ...book,
+      favorite: !book.favorite
+    }
+
+    onUpdate(updateBook);
+
+    updateBooks(Number(book.id), {
+      name: book.name, 
+      author: book.author, 
+      editor: book.editor, 
+      year: Number(book.year), 
+      favorite: !book.favorite
+    }).then(data => {
+      if (data !== 200) {
+        onUpdate(book);
+        console.error("Erreur lors de la mise à jour");
+      }
+    });
+
+  }
+
   return (
     <View style={styles.container}>
+      <Ionicons name={!book.favorite ? "heart-outline" : "heart-sharp" } size={24} color={book.favorite ? "red" : "black"} onPress={handleUpdateFavorite} />
         <Text>{book.name}</Text>
         <Text>{book.author}</Text>
         <Text>{Number(book.year)}</Text>
         <Text>{Number(book.rating)}/5</Text>
+        <Text>{Number(book.favorite)}</Text>
     </View>
   )
 }
