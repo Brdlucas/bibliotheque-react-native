@@ -8,10 +8,14 @@ import { Button, Pressable, ScrollView, StyleSheet, View } from "react-native";
 export default function Index() {
   const [books, setBooks] = useState<Books[]>([]);
   const router = useRouter();
+  const [searchParams, setSearchParams] = useState("");
+  const [valueSearchParams, setValueSearchParams] = useState("");
+const [activeFilter, setActiveFilter] = useState<string | null>(null);
+
 
   useEffect(() => {
-    getBooks().then(data => setBooks(data));
-  }, []);
+    getBooks(searchParams, valueSearchParams).then(data => setBooks(data));
+  }, [searchParams, valueSearchParams]);
 
 
     const handleBookUpdate = (updatedBook: Books) => {
@@ -22,8 +26,25 @@ export default function Index() {
     );
   };
 
+  const handleShowFavorite = async (search: string, valueSearch: string) => {
+
+    if(activeFilter === search + valueSearch){
+      setActiveFilter(null);
+      setSearchParams("");
+      setValueSearchParams("");
+    }else {
+      setActiveFilter(search + valueSearch);
+      setSearchParams(search);
+      setValueSearchParams(valueSearch);
+    }
+
+  }
+
   return (
       <ScrollView>
+        <View>
+          <Button title="favoris" onPress={() => handleShowFavorite("favorite", "true")} />
+        </View>
         <Button  title="ajouter" onPress={() => router.push('/books/new-book')}/>
         <View style={styles.container}>
       { books.map((value, idx) => (
