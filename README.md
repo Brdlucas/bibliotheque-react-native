@@ -51,26 +51,50 @@
 - Affichage des livres via un `.map()` qui appelle le composant `BookCard` pour chaque entrée.
 - Création de la fonction `handleBookUpdate()` pour mettre a jour le status de favoris en tant réel.
 - Ajout d'un filtre de recherche pour filtrer seulement les livres ajoutés en favoris
+- Création des boutons **lu**, **non lu**, et du la rercherche par live pour le filtre demandé.
 ### **BookServices.tsx**
-- Appel de l’API avec la méthode `GET` afin d’obtenir tous les livres disponibles.
-- Création d’une constante `books` qui effectue un `.map()` sur `data` pour filtrer et formater les valeurs nécessaires.
-- Appel de l'API avec la méthode `GET` afin de récupérer un seul livre a partir de l'`id`.
-- Appel de l'API avec la méthode `DELETE` afin de supprimer le livre spécifié.
-   Appel de l'API avec la méthode `POST` afin de créer  un nouveau livre a partir des informations données **(name, author, editor, year)**.
--  Appel de l'API avec la méthode `PUT` afin de mettre a jour le livre spécifié et retourne le status.
--  Amélioration des rentrées d'information lors de l'update d'un livre (prise en compte de favorite).
--  Création de `fetchbooks()` qui vérifie si **search** contient une valeur et renvoie une **response** suivant le résultat. 
--  Fonction utilisée pour filtrer les futures recherches
+
+- ##### **Fonction getBooks()** :
+  - Appel de l’API avec la méthode `GET` afin d’obtenir tous les livres disponibles.
+  - Création de `fetchbooks()` qui vérifie si **search** contient une valeur et renvoie une **response** suivant le résultat. 
+  - Fonction utilisée pour filtrer les futures recherches
+  - Création d’une constante `books` qui effectue un `.map()` sur `data` pour filtrer et formater les valeurs nécessaires.
+
+- ##### **Fonction getDetailBook()** :
+  - Appel de l'API avec la méthode `GET` afin de récupérer un seul livre a partir de l'`id`.
+
+- ##### **Fonction postNewBook()** :
+   - Appel de l'API avec la méthode `POST` afin de créer  un nouveau livre a partir des informations données **(name, author, editor, year)**.
+
+- ##### **Fonction updateBooks()** :
+  -  Appel de l'API avec la méthode `PUT` afin de mettre a jour le livre spécifié et retourne le status.
+  -  Amélioration des rentrées d'information lors de l'update d'un livre (prise en compte de favorite).
+  -  changement du return pour ajouter a la fois le status et les data si existante.
+
+- ##### **Fonction getDeleteBook()** :
+  - Appel de l'API avec la méthode `DELETE` afin de supprimer le livre spécifié.
+
 ### **[id].tsx**
-- Récupération de l'`id` a partir de l'url (avec `useLocalSearchParams()`) pour l'ajouter dans la function `getDetailBook()` pour ensuite récupérer seulement le livre correspondant a ce dernier.
-- Affichage des informations dans le return récupéré depuis `getDetailBook()`
-- Ajout d'un bouton pour supprimer le livre et création d'une fonction `handleDeleteBook` qui récupère l'`id` pour supprimer le livre. 
-- Redirection vers la page d'acceuil après succès.
-- Ajout d'un bouton de redirection vers la page de modification.
-- Appel de la fonction `getNotesByBook()` pour récupérer les notes en relation avec le livre.
-- Création d'un bouton qui permet d'afficher ou non le 'formulaire' pour ajouter une nouvelle note.
-- Création d'une fonction `handleNewNote()` qui récupère l'id pour l'envoyer dans `addNote()` (avec le contenu) afin de créer une nouvelle note en rapport avec le livre, puis mise a jour du tableau `notes` pour un affichage dynamique.
-- Remise en forme suite au changement de `updateBooks()`.
+- ##### **Fonction getDetailBook()** :
+  - Récupération de l'`id` a partir de l'url (avec `useLocalSearchParams()`) pour l'ajouter dans la function `getDetailBook()` pour ensuite récupérer seulement le livre correspondant a ce dernier.
+  - Affichage des informations dans le return récupéré depuis `getDetailBook()`
+  - Ajout d'un bouton de redirection vers la page de modification.
+  
+- ##### **handleDeleteBook()** :
+  - Ajout d'un bouton pour supprimer le livre et création d'une fonction `handleDeleteBook` qui récupère l'`id` pour supprimer le livre. 
+  - Redirection vers la page d'acceuil après succès.
+
+- ##### **Fonction getNotesByBook()** :
+  - Appel de la fonction `getNotesByBook()` pour récupérer les notes en relation avec le livre.
+  - Création d'un bouton qui permet d'afficher ou non le "formulaire" pour ajouter une nouvelle note.
+  
+- ##### **handleNewNote()** :
+  - Création d'une fonction `handleNewNote()` qui récupère l'id pour l'envoyer dans `addNote()` (avec le contenu) afin de créer une nouvelle note en rapport avec le livre, puis mise a jour du tableau `notes` pour un affichage dynamique.
+  - Remise en forme suite au changement de `updateBooks()`.
+  
+- ##### **handleRead()** :
+  - Appel de la fonction `udpateBooks()` avec les informations minimum requis ainsi que le boolean `book.read` pour changer le status du livre a **"lu"** ou **"non lu"**.
+  - Appel de la constante `setBook()` pour mettre a jour les informations dynamiquement.
 
 ### **new-book.tsx**
 - Création de plusieurs champs pour rentrer les informations minimum a la création d'un livre **(name, author, editor, year)**.
