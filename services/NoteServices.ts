@@ -4,7 +4,6 @@ async function getNotesByBook(id: number): Promise<Notes[]>{
 
     const response = await fetch(`http://localhost:3000/books/${id}/notes`);
     const data = await response.json();
-    console.log("data notes = ", data);
 
    const notes = data.map(
     ({
@@ -45,6 +44,6 @@ async function addNote(idBook: number, content: string) {
 
 
 export {
-    addNote, getNotesByBook
+  addNote, getNotesByBook
 };
 
