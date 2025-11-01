@@ -66,8 +66,8 @@ Si vous choissisez la première option, Il faudrat aussi vérifier dans `BookSer
 - Création de la fonction `handleBookUpdate()` pour mettre a jour le status de favoris en tant réel.
 - Ajout d'un filtre de recherche pour filtrer seulement les livres ajoutés en favoris
 - Création des boutons **lu**, **non lu**, et du la rercherche par live pour le filtre demandé.
+  
 ### **BookServices.tsx**
-
 - ##### **Fonction getBooks()** :
   - Appel de l’API avec la méthode `GET` afin d’obtenir tous les livres disponibles.
   - Création de `fetchbooks()` qui vérifie si **search** contient une valeur et renvoie une **response** suivant le résultat. 
@@ -79,11 +79,13 @@ Si vous choissisez la première option, Il faudrat aussi vérifier dans `BookSer
 
 - ##### **Fonction postNewBook()** :
    - Appel de l'API avec la méthode `POST` afin de créer  un nouveau livre a partir des informations données **(name, author, editor, year)**.
+   - Ajout de **cover** pour
 
 - ##### **Fonction updateBooks()** :
   -  Appel de l'API avec la méthode `PUT` afin de mettre a jour le livre spécifié et retourne le status.
   -  Amélioration des rentrées d'information lors de l'update d'un livre (prise en compte de favorite).
   -  changement du return pour ajouter a la fois le status et les data si existante.
+  - Ajout de **cover** pour
 
 - ##### **Fonction getDeleteBook()** :
   - Appel de l'API avec la méthode `DELETE` afin de supprimer le livre spécifié.
@@ -116,11 +118,13 @@ Si vous choissisez la première option, Il faudrat aussi vérifier dans `BookSer
 ### **new-book.tsx**
 - Création de plusieurs champs pour rentrer les informations minimum a la création d'un livre **(name, author, editor, year)**.
 - Au clique du bouton de création, on envoies les informations des variables cités ci-dessus a la fonction `postNewBook()` puis si lors du return, on recoit un status `201` on renvoie l'utilisateur sur la page d'acceuil.
+- Ajout d'un champ pour ajouter une image pour la couverture du livre (utilisation de ``expo-image-picker`` pour récupérer en format ``blob:``)
 ### **update-book/[id].tsx**
 - récupération des informations du livre que l'on veut modifier a partir de l'id (a l'aide de `useLocalSearchParams()`).
 - Création des variables qui vont contenir les valeurs récupérés depuis `getDetailBook()` mais aussi ceux modifié a partir du `TextInput`.
 - Création d'une fonction nommée `handleUpdateBook()` asynchrone qui appele la fonction `updateBooks()`  permettent pour mettre a jour les informations du "formulaire".
 - Redirection vers la page d'acceuil après que la mise a jour sois valide.
+- Ajout d'un champ pour ajouter une image pour la couverture du livre (utilisation de ``expo-image-picker`` pour récupérer en format ``blob:``)
 
 ### **NoteServices.tsx**
 - Appel de l’API avec la méthode `GET` afin d’obtenir toutes les notes en rapport avec livre.
