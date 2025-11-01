@@ -28,8 +28,8 @@ function updateBook() {
     const handleUpdateBook = async () => {
       setMessage("");
 
-      updateBooks(Number(id), {name: name, author: author, editor: author, year: Number(year)}).then(data => {
-          if(data === 200){
+      updateBooks(Number(id), {name: name, author: author, editor: editor, year: Number(year)}).then(data => {
+          if(data && data.status === 200){
             setTimeout(() => {
               router.push('/')
             }, 800)
