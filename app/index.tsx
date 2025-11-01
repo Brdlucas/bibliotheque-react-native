@@ -1,9 +1,10 @@
 import BookCard from "@/components/BookCard";
 import { Books } from "@/models/Books";
 import { getBooks } from "@/services/BookServices";
+import { useFocusEffect } from "@react-navigation/native";
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
-import { Button, Pressable, ScrollView, StyleSheet, View } from "react-native";
+import React, { useState, } from "react";
+import { Button, Pressable, ScrollView, StyleSheet, TextInput, View } from "react-native";
 
 export default function Index() {
   const [books, setBooks] = useState<Books[]>([]);
@@ -12,10 +13,12 @@ export default function Index() {
   const [valueSearchParams, setValueSearchParams] = useState("");
 const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
-
-  useEffect(() => {
+//  utilisation du useFocusEffect au lieu du useEffect pour rappeler getBooks a chaque affichage de la page
+useFocusEffect(
+  React.useCallback(() => {
     getBooks(searchParams, valueSearchParams).then(data => setBooks(data));
-  }, [searchParams, valueSearchParams]);
+  }, [searchParams, valueSearchParams])
+)
 
 
     const handleBookUpdate = (updatedBook: Books) => {
@@ -26,7 +29,7 @@ const [activeFilter, setActiveFilter] = useState<string | null>(null);
     );
   };
 
-  const handleShowFavorite = async (search: string, valueSearch: string) => {
+  const handleShowFilter = async (search: string, valueSearch: string) => {
 
     if(activeFilter === search + valueSearch){
       setActiveFilter(null);
@@ -43,7 +46,10 @@ const [activeFilter, setActiveFilter] = useState<string | null>(null);
   return (
       <ScrollView>
         <View>
-          <Button title="favoris" onPress={() => handleShowFavorite("favorite", "true")} />
+          <TextInput style={styles.search} placeholder="rechercher un livre..." onChange={(e) => handleShowFilter("q", e.nativeEvent.text)}  />
+          <Button title="favoris" onPress={() => handleShowFilter("favorite", "true")} />
+          <Button title="lu" onPress={() => handleShowFilter("read", "true")} />
+          <Button title="non lu" onPress={() => handleShowFilter("read", "false")} />
         </View>
         <Button  title="ajouter" onPress={() => router.push('/books/new-book')}/>
         <View style={styles.container}>
@@ -65,5 +71,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     gap: 16,
     padding: 12,
+  },
+
+  search: {
+    padding: 12
   }
 })
