@@ -2,7 +2,7 @@ import FormCard from "@/components/FormCard";
 import { getDetailBook, updateBooks } from "@/services/BookServices";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { ScrollView } from "react-native";
 
 export default function updateBook() {
   const { id } = useLocalSearchParams();
@@ -34,6 +34,7 @@ export default function updateBook() {
       author: author,
       editor: editor,
       year: Number(year),
+      cover: cover,
     }).then((data) => {
       if (data && data.status === 200) {
         setTimeout(() => {
@@ -47,7 +48,7 @@ export default function updateBook() {
   };
 
   return (
-    <View>
+    <ScrollView>
       <FormCard
         name={name}
         author={author}
@@ -63,6 +64,6 @@ export default function updateBook() {
         handleStatusBook={handleUpdateBook}
         method="put"
       />
-    </View>
+    </ScrollView>
   );
 }
