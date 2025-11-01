@@ -1,6 +1,6 @@
 import { Books } from "@/models/Books";
 import { Notes } from "@/models/Notes";
-import { getDeleteBook, getDetailBook } from "@/services/BookServices";
+import { getDeleteBook, getDetailBook, updateBooks } from "@/services/BookServices";
 import { addNote, getNotesByBook } from "@/services/NoteServices";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -35,11 +35,20 @@ const router = useRouter();
       });
   }
 
+  const handleRead = async () => {
+      updateBooks(Number(id), {name: book?.name, author: book?.author, editor: book?.editor, year:Number(book?.year), read: !book?.read}).then((data) => {
+        if(data && data.status === 200){
+          setBook(data.data)
+        }
+      });
+  }
+
   return (
     <ScrollView>
       {book && (
         <View>
           <View style={styles.Container}>
+          <Button title={book.read ? "lu" : "non lu"} onPress={() => handleRead()} />
           <Button title="modifier" onPress={() => router.push(`/books/update-book/${book.id.toString()}`)} />
           <Button title="supprimer" onPress={() => handleDeleteBook(book.id)} />
           <Text style={styles.Text}>auteur: {book.author}</Text>
