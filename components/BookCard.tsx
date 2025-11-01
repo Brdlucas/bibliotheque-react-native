@@ -27,7 +27,7 @@ function BookCard(props: BookCardProps) {
       year: Number(book.year), 
       favorite: !book.favorite
     }).then(data => {
-      if (data !== 200) {
+      if (data && data.status !== 200) {
         onUpdate(book);
         console.error("Erreur lors de la mise à jour");
       }
@@ -42,7 +42,7 @@ function BookCard(props: BookCardProps) {
         <Text>{book.author}</Text>
         <Text>{Number(book.year)}</Text>
         <Text>{Number(book.rating)}/5</Text>
-        <Text>{Number(book.favorite)}</Text>
+        <Text>{book.read ? 'lu' : "non lu"}</Text>
     </View>
   )
 }
