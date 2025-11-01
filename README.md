@@ -41,6 +41,9 @@
   - Création de `handleUpdateFavorite()` lors du clique pour ajouter au favoris qui créer une constante `updateBook` qui récupère les éléments de book et change le status de favoris.
   - Insertion ensuite dans la function `onUpdate()` et appel de la fonction `updateBooks()` avec les éléments minimum requis pour mettre a jour le livre.
   - Condition qui renvoie la valeur d'avant si l'update n'a pas fonctionnée.
+- **StarRating**
+  - Affichage de 5 étoiles cliquables
+  - récupère les étoiles existantes et lors du clique update les étoiles avec `onRatingChange()`, qui permet d'appeler la fonction `handleRatingChange()` mis en paramètre dans **[id].tsx** pour mettre a jour la notation du livre.
 
 ---
 
@@ -95,6 +98,9 @@
 - ##### **handleRead()** :
   - Appel de la fonction `udpateBooks()` avec les informations minimum requis ainsi que le boolean `book.read` pour changer le status du livre a **"lu"** ou **"non lu"**.
   - Appel de la constante `setBook()` pour mettre a jour les informations dynamiquement.
+  
+- ##### **handleRatingChange()** :
+  -  Appel du composent `<StarRating />` pour l'affichage et la mise a jour de la note du livre 
 
 ### **new-book.tsx**
 - Création de plusieurs champs pour rentrer les informations minimum a la création d'un livre **(name, author, editor, year)**.
