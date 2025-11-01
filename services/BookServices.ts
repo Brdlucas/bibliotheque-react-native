@@ -104,15 +104,10 @@ async function updateBooks(id: number, bookData: Partial<Books>){
     });
 
 
-    console.log(response.status);
+   const status = response.status;
+    const data = response.ok ? await response.json() : null;
 
-    if(response.status === 200){
-      return response.status;
-    }else {
-      console.error('Erreur lors de la mise a jour du livre');
-      return response.status;
-    }
-
+    return { status, data };
   } catch (error) {
     console.error(error);
   }
