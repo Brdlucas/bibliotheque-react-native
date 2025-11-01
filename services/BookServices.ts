@@ -78,13 +78,10 @@ async function postNewBook(name: string, author: string, editor: string, year: n
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({name, author, editor, year})
     });
-  
-    if(response.status === 201){
-      return response.status;
-    }else {
-      console.error('Erreur lors de la création du livre');
-      return response.status;
-    }
+    const status = response.status;
+    const data = response.ok ? await response.json() : null;
+
+    return { status, data };
 
   } catch (error) {
     console.error(error);
