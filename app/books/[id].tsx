@@ -1,3 +1,4 @@
+import StarRating from "@/components/StarRating";
 import { Books } from "@/models/Books";
 import { Notes } from "@/models/Notes";
 import { getDeleteBook, getDetailBook, updateBooks } from "@/services/BookServices";
@@ -43,6 +44,14 @@ const router = useRouter();
       });
   }
 
+  const handleRatingChange = async (newRating: number) => {
+      updateBooks(Number(id), {name: book?.name, author: book?.author, editor: book?.editor, year: Number(book?.year), rating: newRating}).then(data => {
+        if(data && data.status === 200){
+          setBook(data.data)
+        }
+      })
+}
+
   return (
     <ScrollView>
       {book && (
@@ -51,6 +60,7 @@ const router = useRouter();
           <Button title={book.read ? "lu" : "non lu"} onPress={() => handleRead()} />
           <Button title="modifier" onPress={() => router.push(`/books/update-book/${book.id.toString()}`)} />
           <Button title="supprimer" onPress={() => handleDeleteBook(book.id)} />
+            <StarRating rating={book.rating} onRatingChange={handleRatingChange} editable={true} size={32} />
           <Text style={styles.Text}>auteur: {book.author}</Text>
           <Text style={styles.Text}>editeur: {book.editor}</Text>
           <Text style={styles.Text}>nom: {book.name}</Text>
