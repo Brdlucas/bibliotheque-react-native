@@ -1,8 +1,12 @@
 import { Notes } from "@/models/Notes";
 
+// penser a changer l'url coté api avec 192.168.0.32 ou localhost
+// const urlBack = "localhost"
+const urlBack = "192.168.0.32"
+
 async function getNotesByBook(id: number): Promise<Notes[]>{
 
-    const response = await fetch(`http://localhost:3000/books/${id}/notes`);
+    const response = await fetch(`http://${urlBack}:3000/books/${id}/notes`);
     const data = await response.json();
 
    const notes = data.map(
@@ -28,7 +32,7 @@ async function getNotesByBook(id: number): Promise<Notes[]>{
 
 
 async function addNote(idBook: number, content: string) {
-    const response = await fetch(`http://localhost:3000/books/${idBook}/notes`, {
+    const response = await fetch(`http://${urlBack}:3000/books/${idBook}/notes`, {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({content})
