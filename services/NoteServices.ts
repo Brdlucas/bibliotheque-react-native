@@ -1,8 +1,8 @@
 import { Notes } from "@/models/Notes";
 
 // penser a changer l'url coté api avec 192.168.0.32 ou localhost
-// const urlBack = "localhost"
-const urlBack = "192.168.0.32"
+const urlBack = "localhost"
+// const urlBack = "192.168.0.32"
 
 async function getNotesByBook(id: number): Promise<Notes[]>{
 

@@ -15,6 +15,17 @@
    ```
    npx expo start
    ```
+3. **Vérifier l'url Api (défaut localhost)**
+   vous avez le choix entre :
+````
+http://192.168.0.32:${PORT} (pour le téléphone physique)
+````
+ou bien : 
+
+````
+http://localhost:${PORT} (pour la version web)
+```` 
+Si vous choissisez la première option, Il faudrat aussi vérifier dans `BookServices.tsx` et `NoteService.tsx` que la constante `urlBack` sois la bonne.
 
 ---
 
