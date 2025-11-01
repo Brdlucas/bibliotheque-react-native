@@ -1,11 +1,10 @@
 import FormCard from "@/components/FormCard";
 import { postNewBook } from "@/services/BookServices";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 
 function newBook() {
-  const { id } = useLocalSearchParams();
 
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
@@ -17,9 +16,10 @@ function newBook() {
   const router = useRouter();
 
   const handleNewBook = async () => {
+
     setMessage("");
 
-    postNewBook(name, author, editor, Number(year)).then((data) => {
+    postNewBook(name, author, editor, Number(year), cover).then((data) => {
       if (data && data.status === 201) {
         console.log(data)
         setTimeout(() => {
@@ -33,7 +33,7 @@ function newBook() {
   };
 
   return (
-    <View style={styles.Container}>
+    <ScrollView style={styles.Container}>
       <FormCard
         name={name}
         author={author}
@@ -49,7 +49,7 @@ function newBook() {
         handleStatusBook={handleNewBook}
         method={"post"}
       />
-    </View>
+    </ScrollView>
   );
 }
 
