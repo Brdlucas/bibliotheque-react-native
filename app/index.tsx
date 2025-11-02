@@ -1,4 +1,5 @@
 import BookCard from "@/components/BookCard";
+import FilterPicker from "@/components/FilterPicker";
 import { Books } from "@/models/Books";
 import { getBooks } from "@/services/BookServices";
 import { useFocusEffect } from "@react-navigation/native";
@@ -19,13 +20,15 @@ export default function Index() {
   const router = useRouter();
   const [searchParams, setSearchParams] = useState("");
   const [valueSearchParams, setValueSearchParams] = useState("");
+  const [sortParams, setSortParams] = useState("");
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
+
 
   //  utilisation du useFocusEffect au lieu du useEffect pour rappeler getBooks a chaque affichage de la page
   useFocusEffect(
     React.useCallback(() => {
-      getBooks(searchParams, valueSearchParams).then((data) => setBooks(data));
-    }, [searchParams, valueSearchParams])
+      getBooks(searchParams, valueSearchParams, sortParams).then((data) => setBooks(data));
+    }, [searchParams, valueSearchParams, sortParams])
   );
 
   const handleBookUpdate = (updatedBook: Books) => {
@@ -34,17 +37,25 @@ export default function Index() {
     );
   };
 
-  const handleShowFilter = async (search: string, valueSearch: string) => {
-    if (activeFilter === search + valueSearch) {
-      setActiveFilter(null);
-      setSearchParams("");
-      setValueSearchParams("");
-    } else {
-      setActiveFilter(search + valueSearch);
-      setSearchParams(search);
-      setValueSearchParams(valueSearch);
-    }
-  };
+  const handleShowFilter = async (
+  search: string,
+  valueSearch: string,
+  sortParams?: string
+) => {
+  const filterKey = search + valueSearch + (sortParams || "");
+
+  if (activeFilter === filterKey) {
+    setActiveFilter(null);
+    setSearchParams("");
+    setValueSearchParams("");
+    setSortParams("");
+  } else {
+    setActiveFilter(filterKey);
+    setSearchParams(search);
+    setValueSearchParams(valueSearch);
+  }
+};
+
 
   return (
     <View style={styles.page}>
@@ -56,25 +67,17 @@ export default function Index() {
           style={styles.search}
           placeholder="Rechercher un livre..."
           placeholderTextColor="#aaa"
-          onChange={(e) => handleShowFilter("q", e.nativeEvent.text)}
+          onChange={(e) => handleShowFilter("q", e.nativeEvent.text ,"")}
         />
       </View>
       <View style={styles.filters}>
         <FilterButton
           label="Favoris"
           active={activeFilter === "favoritetrue"}
-          onPress={() => handleShowFilter("favorite", "true")}
+          onPress={() => handleShowFilter("favorite", "true", "")}
         />
-        <FilterButton
-          label="Lu"
-          active={activeFilter === "readtrue"}
-          onPress={() => handleShowFilter("read", "true")}
-        />
-        <FilterButton
-          label="Non lu"
-          active={activeFilter === "readfalse"}
-          onPress={() => handleShowFilter("read", "false")}
-        />
+
+<FilterPicker setSearchParams={setSearchParams} setActiveFilter={setActiveFilter} setValueSearchParams={setValueSearchParams} setSortParams={setSortParams}/>
       </View>
 
       <TouchableOpacity
@@ -83,6 +86,10 @@ export default function Index() {
       >
         <Text style={styles.addButtonText}>+ Ajouter un livre</Text>
       </TouchableOpacity>
+
+      {
+        books.length <= 0 && <Text style={{textAlign: 'center', fontSize: 20}}>Oops... aucun livres disponible</Text>
+      }
 
       <ScrollView contentContainerStyle={styles.container}>
         {books.map((book) => (
