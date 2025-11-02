@@ -4,13 +4,17 @@ import { Books } from "@/models/Books";
 const urlBack = "localhost";
 // const urlBack = "192.168.0.32"
 
-async function getBooks(search: string, value: string): Promise<Books[]> {
+async function getBooks(search: string, value: string, sort: string): Promise<Books[]> {
   // récupération des books a partir de l'api et suivant le filtre de recherche
   const fetchbooks = async () => {
     let response;
     if (!search) {
       response = await fetch(`http://${urlBack}:3000/books`);
-    } else {
+    }else if(sort){
+      response = await fetch(`http://${urlBack}:3000/books?${search}=${value}&order=${sort}`);
+    }
+    
+    else {
       response = await fetch(`http://${urlBack}:3000/books?${search}=${value}`);
     }
     const data = response.json();
@@ -74,7 +78,8 @@ async function postNewBook(
   author: string,
   editor: string,
   year: number,
-  cover: string
+  cover: string,
+  theme: string
 ) {
   try {
     // création  d'un book a partir des informations fournies
@@ -82,7 +87,7 @@ async function postNewBook(
     const response = await fetch(`http://${urlBack}:3000/books/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, author, editor, year, cover }),
+      body: JSON.stringify({ name, author, editor, year, cover, theme }),
     });
     const status = response.status;
     const data = response.ok ? await response.json() : null;
