@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
+import SelectCard from "./SelectCard";
 
 interface FormCardProps {
   name: string;
@@ -15,6 +16,7 @@ interface FormCardProps {
   editor: string;
   year: string;
   cover?: string;
+  theme?: string;
   message?: string;
   image?: string;
   setName: (v: string) => void;
@@ -22,6 +24,7 @@ interface FormCardProps {
   setEditor: (v: string) => void;
   setYear: (v: string) => void;
   setCover: (v: string) => void;
+  setTheme: (v: string) => void;
   handleStatusBook: () => void;
   method: string;
 }
@@ -32,15 +35,41 @@ export default function FormCard({
   editor,
   year,
   cover,
+  theme,
   message,
   setName,
   setAuthor,
   setEditor,
   setYear,
   setCover,
+  setTheme,
   handleStatusBook,
   method,
 }: FormCardProps) {
+
+   const themes = [
+
+    "Science-fiction",
+    "Fantastique",
+    "Fantasy",
+    "Romance",
+    "Policier",
+    "Thriller",
+    "Horreur",
+    "Aventure",
+    "Historique",
+    "Drame",
+    "Comédie",
+    "Philosophique",
+    "Poésie",
+    "Biographie",
+    "Autobiographie",
+    "Développement personnel",
+    "Documentaire",
+    "Psychologique",
+  ];
+
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images", "videos"],
@@ -55,6 +84,9 @@ export default function FormCard({
       setCover(result.assets[0].uri);
     }
   };
+
+
+  
 
   return (
     <View style={styles.page}>
@@ -119,6 +151,8 @@ export default function FormCard({
           placeholder="Ex: 1943"
           placeholderTextColor="#aaa"
         />
+        <Text style={styles.label}>Theme</Text>
+        <SelectCard theme={theme} setTheme={setTheme}/>
         {message ? (
           <Text
             style={[
