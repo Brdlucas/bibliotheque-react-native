@@ -44,6 +44,9 @@ Si vous choissisez la première option, Il faudrat premièrement le changer dans
 - **NoteServices.ts**
   - Contient les fonctions nécessaires aux appels API (`GET`, `POST`).
   - Exporte plusieurs fonctions suivant les besoins.
+  
+### ⚙️ Packages
+  - Installation de ``@react-native-picker/picker`` pour avoir un menu déroulant (notamment pour les filtres et l'ajout de thèmes).
 
 ### 🧱 components
 - **BookCard.tsx**
@@ -55,6 +58,15 @@ Si vous choissisez la première option, Il faudrat premièrement le changer dans
 - **StarRating**
   - Affichage de 5 étoiles cliquables
   - récupère les étoiles existantes et lors du clique update les étoiles avec `onRatingChange()`, qui permet d'appeler la fonction `handleRatingChange()` mis en paramètre dans **[id].tsx** pour mettre a jour la notation du livre.
+  - **ConfirmCard**
+    - création du composent pour l'appeler dans la création et mise a jour du livre.
+  - **ConfirmCard**
+    - Popup de confirmation de suppression du livre.
+  - **FilterCard**
+  - menu déroulant pour faciliter le choix de l'utilisateur lors du filtre (trie par auteur, étoiles, etc...).
+  - **SelectCar**
+  - utiliser pour la création et la mise a jour d'un livre (pour choisir le theme).
+  - 
 
 ---
 
@@ -66,6 +78,7 @@ Si vous choissisez la première option, Il faudrat premièrement le changer dans
 - Création de la fonction `handleBookUpdate()` pour mettre a jour le status de favoris en tant réel.
 - Ajout d'un filtre de recherche pour filtrer seulement les livres ajoutés en favoris
 - Création des boutons **lu**, **non lu**, et du la rercherche par live pour le filtre demandé.
+- Appel de FilterPicker pour le tri (par auteur, et note)
   
 ### **BookServices.tsx**
 - ##### **Fonction getBooks()** :
@@ -73,6 +86,7 @@ Si vous choissisez la première option, Il faudrat premièrement le changer dans
   - Création de `fetchbooks()` qui vérifie si **search** contient une valeur et renvoie une **response** suivant le résultat. 
   - Fonction utilisée pour filtrer les futures recherches
   - Création d’une constante `books` qui effectue un `.map()` sur `data` pour filtrer et formater les valeurs nécessaires.
+  - ajout de `sort` pour le filtre avec condition pour l'url 
 
 - ##### **Fonction getDetailBook()** :
   - Appel de l'API avec la méthode `GET` afin de récupérer un seul livre a partir de l'`id`.
@@ -95,6 +109,7 @@ Si vous choissisez la première option, Il faudrat premièrement le changer dans
   - Récupération de l'`id` a partir de l'url (avec `useLocalSearchParams()`) pour l'ajouter dans la function `getDetailBook()` pour ensuite récupérer seulement le livre correspondant a ce dernier.
   - Affichage des informations dans le return récupéré depuis `getDetailBook()`
   - Ajout d'un bouton de redirection vers la page de modification.
+  - Appel de ConfirmCard lors de la suppression d'un livre
   
 - ##### **handleDeleteBook()** :
   - Ajout d'un bouton pour supprimer le livre et création d'une fonction `handleDeleteBook` qui récupère l'`id` pour supprimer le livre. 
@@ -118,13 +133,15 @@ Si vous choissisez la première option, Il faudrat premièrement le changer dans
 ### **new-book.tsx**
 - Création de plusieurs champs pour rentrer les informations minimum a la création d'un livre **(name, author, editor, year)**.
 - Au clique du bouton de création, on envoies les informations des variables cités ci-dessus a la fonction `postNewBook()` puis si lors du return, on recoit un status `201` on renvoie l'utilisateur sur la page d'acceuil.
-- Ajout d'un champ pour ajouter une image pour la couverture du livre (utilisation de ``expo-image-picker`` pour récupérer en format ``blob:``)
+- Ajout d'un champ pour ajouter une image pour la couverture du livre (utilisation de ``expo-image-picker`` pour récupérer en format ``blob:``).
+- Ajout du theme lors de la création du livre;
 ### **update-book/[id].tsx**
 - récupération des informations du livre que l'on veut modifier a partir de l'id (a l'aide de `useLocalSearchParams()`).
 - Création des variables qui vont contenir les valeurs récupérés depuis `getDetailBook()` mais aussi ceux modifié a partir du `TextInput`.
 - Création d'une fonction nommée `handleUpdateBook()` asynchrone qui appele la fonction `updateBooks()`  permettent pour mettre a jour les informations du "formulaire".
 - Redirection vers la page d'acceuil après que la mise a jour sois valide.
 - Ajout d'un champ pour ajouter une image pour la couverture du livre (utilisation de ``expo-image-picker`` pour récupérer en format ``blob:``)
+- Ajout de `theme` pour la mise a jour des livres
 
 ### **NoteServices.tsx**
 - Appel de l’API avec la méthode `GET` afin d’obtenir toutes les notes en rapport avec livre.
