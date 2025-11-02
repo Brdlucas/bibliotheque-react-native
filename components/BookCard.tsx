@@ -56,7 +56,7 @@ export default function BookCard(props: BookCardProps) {
           <Text style={styles.author}>{book.author}</Text>
           <View style={styles.infoRow}>
             <Text style={styles.infoText}>{book.year}</Text>
-            <Text style={styles.infoText}>⭐ {book.rating}/5</Text>
+            <Text style={styles.infoText}>⭐ {book.rating ? book.rating : "0"}/5</Text>
           </View>
           <View
             style={[
@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#333",
     marginBottom: 2,
-    backgroundColor: 'red',
     maxWidth: '90%',
   },
   author: {
