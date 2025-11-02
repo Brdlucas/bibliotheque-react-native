@@ -52,7 +52,7 @@ export default function BookCard(props: BookCardProps) {
           resizeMode="cover"
         />
         <View style={styles.content}>
-          <Text style={styles.title}>{book.name}</Text>
+          <Text style={styles.title} ellipsizeMode="tail" numberOfLines={2}>{book.name}</Text>
           <Text style={styles.author}>{book.author}</Text>
           <View style={styles.infoRow}>
             <Text style={styles.infoText}>{book.year}</Text>
@@ -117,6 +117,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#333",
     marginBottom: 2,
+    backgroundColor: 'red',
+    maxWidth: '90%',
   },
   author: {
     fontSize: 14,
