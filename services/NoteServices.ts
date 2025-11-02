@@ -41,8 +41,6 @@ async function addNote(idBook: number, content: string) {
     
     const data = await response.json();
     
-    console.log("data add = ", data);
-
     return data;
 }
 
