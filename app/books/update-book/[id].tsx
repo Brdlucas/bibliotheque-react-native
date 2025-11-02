@@ -13,6 +13,7 @@ export default function updateBook() {
   const [year, setYear] = useState("");
   const [message, setMessage] = useState("");
   const [cover, setCover] = useState("");
+  const [theme, setTheme] = useState("");
 
   const router = useRouter();
 
@@ -24,6 +25,7 @@ export default function updateBook() {
       setEditor(data.editor);
       setYear(String(data.year));
       setCover(data.cover);
+      setTheme(data.theme);
     });
   }, [id]);
 
@@ -36,6 +38,7 @@ export default function updateBook() {
       editor: editor,
       year: Number(year),
       cover: cover,
+      theme: theme,
     }).then((data) => {
       if (data && data.status === 200) {
         setTimeout(() => {
@@ -56,12 +59,14 @@ export default function updateBook() {
         editor={editor}
         year={year}
         cover={cover}
+        theme={theme}
         message={message}
         setName={setName}
         setAuthor={setAuthor}
         setEditor={setEditor}
         setYear={setYear}
         setCover={setCover}
+        setTheme={setTheme}
         handleStatusBook={handleUpdateBook}
         method="put"
       />
