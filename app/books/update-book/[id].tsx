@@ -1,72 +1,75 @@
+import FormCard from "@/components/FormCard";
 import { getDetailBook, updateBooks } from "@/services/BookServices";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { ScrollView } from "react-native";
 
-function updateBook() {
-    const { id } = useLocalSearchParams();
+export default function updateBook() {
+  const { id } = useLocalSearchParams();
 
-    const [name, setName] = useState("");
-    const [author, setAuthor] = useState("");
-    const [editor, setEditor] = useState("");
-    const [year, setYear] = useState("");
-    const [message, setMessage] = useState("");
+  const [name, setName] = useState("");
+  const [author, setAuthor] = useState("");
+  const [editor, setEditor] = useState("");
+  const [year, setYear] = useState("");
+  const [message, setMessage] = useState("");
+  const [cover, setCover] = useState("");
+  const [theme, setTheme] = useState("");
 
-    const router = useRouter();
+  const router = useRouter();
 
-      useEffect(() => {
+  useEffect(() => {
     // récupération du livre en envoyent l'id dans getDetailBook
     getDetailBook(Number(id)).then((data) => {
       setName(data.name);
       setAuthor(data.author);
       setEditor(data.editor);
       setYear(String(data.year));
+      setCover(data.cover);
+      setTheme(data.theme);
     });
   }, [id]);
 
+  const handleUpdateBook = async () => {
+    setMessage("");
 
-    const handleUpdateBook = async () => {
-      setMessage("");
+    updateBooks(Number(id), {
+      name: name,
+      author: author,
+      editor: editor,
+      year: Number(year),
+      cover: cover,
+      theme: theme,
+    }).then((data) => {
+      if (data && data.status === 200) {
+        setTimeout(() => {
+          router.push(`/books/${id}`);
+        }, 800);
+        setMessage("mise a jour efféctué - redirection");
+      } else {
+        setMessage("erreur lors de la mise a jour du livre");
+      }
+    });
+  };
 
-      updateBooks(Number(id), name, author, editor, Number(year)).then(data => {
-          if(data === 200){
-            setTimeout(() => {
-              router.push('/')
-            }, 800)
-            setMessage("mise a jour efféctué - redirection")
-          }else {
-            setMessage("erreur lors de la mise a jour du livre")
-          }
-        });
-    };
-
-    
   return (
-    <View style={styles.Container}> 
-      <Text>mettre a jour un livre</Text>
-      <TextInput style={styles.Text} value={name} onChangeText={setName} />
-      <TextInput style={styles.Text} value={author} onChangeText={setAuthor}/>
-      <TextInput style={styles.Text} value={editor} onChangeText={setEditor}/>
-      <TextInput style={styles.Text} value={year} onChangeText={setYear}/>
-      <Text>{message && message}</Text>
-      <Button title="mettre a jour"  onPress={() => handleUpdateBook()}/>
-    </View>
-  )
+    <ScrollView>
+      <FormCard
+        name={name}
+        author={author}
+        editor={editor}
+        year={year}
+        cover={cover}
+        theme={theme}
+        message={message}
+        setName={setName}
+        setAuthor={setAuthor}
+        setEditor={setEditor}
+        setYear={setYear}
+        setCover={setCover}
+        setTheme={setTheme}
+        handleStatusBook={handleUpdateBook}
+        method="put"
+      />
+    </ScrollView>
+  );
 }
-
-export default updateBook
-
-
-const styles = StyleSheet.create({
-    Container: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 16,
-        padding: 12
-    },
-
-    Text: {
-        padding: 12,
-        backgroundColor: 'lightgray'
-    }
-})
