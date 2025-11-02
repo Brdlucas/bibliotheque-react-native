@@ -25,7 +25,7 @@ ou bien :
 ````
 http://localhost:${PORT} (pour la version web)
 ```` 
-Si vous choissisez la première option, Il faudrat aussi vérifier dans `BookServices.tsx` et `NoteService.tsx` que la constante `urlBack` sois la bonne.
+Si vous choissisez la première option, Il faudrat premièrement le changer dans l'API au niveau de `app.listen` mais  aussi vérifier dans `BookServices.tsx` et `NoteService.tsx` que la constante `urlBack` sois la bonne.
 
 ---
 
