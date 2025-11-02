@@ -23,6 +23,7 @@ export default function updateBook() {
       setAuthor(data.author);
       setEditor(data.editor);
       setYear(String(data.year));
+      setCover(data.cover);
     });
   }, [id]);
 
