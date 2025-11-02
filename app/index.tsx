@@ -76,7 +76,6 @@ export default function Index() {
           active={activeFilter === "favoritetrue"}
           onPress={() => handleShowFilter("favorite", "true", "")}
         />
-
 <FilterPicker setSearchParams={setSearchParams} setActiveFilter={setActiveFilter} setValueSearchParams={setValueSearchParams} setSortParams={setSortParams}/>
       </View>
 
@@ -154,12 +153,13 @@ const styles = StyleSheet.create({
   },
   filters: {
     flexDirection: "row",
+    alignItems: 'center',
     justifyContent: "space-around",
     marginVertical: 16,
   },
   filterButton: {
     backgroundColor: "#e0e0e0",
-    paddingVertical: 8,
+    paddingVertical: 12,
     paddingHorizontal: 16,
     borderRadius: 20,
   },
