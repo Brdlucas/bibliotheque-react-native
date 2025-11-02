@@ -1,3 +1,4 @@
+import ConfirmCard from "@/components/ConfirmCard";
 import StarRating from "@/components/StarRating";
 import { Books } from "@/models/Books";
 import { Notes } from "@/models/Notes";
@@ -12,6 +13,7 @@ export default function BookDetails() {
   const [notes, setNotes] = useState<Notes[]>([]);
   const [contentNote, onChangeContentNote] = useState("");
   const [isActive, setIsActvie] = useState(false);
+  const [isDeleteActive, setIsDeleteActive] = useState(false);
   const { id } = useLocalSearchParams();
 const router = useRouter();
 
@@ -55,8 +57,16 @@ useFocusEffect(
 }
 
  return book && (
-    <ScrollView style={styles.page}>
+   <ScrollView>
+    <View style={ isDeleteActive && styles.pageHidden}></View>
+      {
+        isDeleteActive && (
+          <ConfirmCard id={book.id} name={book.name} setIsDeleteActive={setIsDeleteActive} handleDeleteBook={handleDeleteBook} />
+        )
+      }
+      <View style={styles.page}>
       <View style={styles.containerImage}>
+        
       <Image
         source={book.cover ?{uri: book.cover} : {uri: "https://cdn-icons-png.flaticon.com/512/29/29302.png"}}
         style={styles.cover}
@@ -100,7 +110,7 @@ useFocusEffect(
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, styles.deleteButton]}
-            onPress={() => handleDeleteBook(book.id)}
+            onPress={() => setIsDeleteActive(true)}
           >
             <Text style={styles.deleteButtonText}>Supprimer</Text>
           </TouchableOpacity>
@@ -146,6 +156,7 @@ useFocusEffect(
           )}
         </View>
       </View>
+  </View>
     </ScrollView>
   );
 }
@@ -154,6 +165,14 @@ const styles = StyleSheet.create({
   page: {
     backgroundColor: "#fdfdfd",
     padding: 8,
+    position: 'relative'
+  },
+  pageHidden:{
+    width: '100%',
+    height: '100%',
+    zIndex: 10,
+     backgroundColor: "rgba(0, 0, 0, 0.7)",
+    position: 'absolute',
   },
   cover: {
     width: "100%",
