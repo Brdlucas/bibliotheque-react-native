@@ -12,6 +12,7 @@ function newBook() {
   const [year, setYear] = useState("");
   const [message, setMessage] = useState("");
   const [cover, setCover] = useState("");
+  const [theme, setTheme] = useState("");
 
   const router = useRouter();
 
@@ -19,13 +20,12 @@ function newBook() {
 
     setMessage("");
 
-    postNewBook(name, author, editor, Number(year), cover).then((data) => {
+    postNewBook(name, author, editor, Number(year), cover, theme).then((data) => {
       if (data && data.status === 201) {
-        console.log(data)
         setTimeout(() => {
           router.push(`/books/${data.data.id}`);
         }, 800);
-        setMessage("mise a jour efféctué - redirection");
+        setMessage("création du livre efféctué - redirection");
       } else {
         setMessage("erreur lors de la création du livre");
       }
@@ -40,12 +40,14 @@ function newBook() {
         editor={editor}
         year={year}
         cover={cover}
+        theme={theme}
         message={message}
         setName={setName}
         setAuthor={setAuthor}
         setEditor={setEditor}
         setYear={setYear}
         setCover={setCover}
+        setTheme={setTheme}
         handleStatusBook={handleNewBook}
         method={"post"}
       />
